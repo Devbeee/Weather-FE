@@ -1,0 +1,165 @@
+.container {
+  width: 22rem;
+  min-width: 22rem;
+  // height: 30rem;
+  background: rgba(225, 225, 225, 0.18);
+  box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.37);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border-radius: 10px;
+  border: 1px solid rgba(225, 225, 225, 0.18);
+  padding: 1rem;
+}
+.temperature {
+  display: flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 3rem;
+  margin-bottom: 1rem;
+  p {
+    font-weight: 400;
+    font-size: 2.5rem;
+    line-height: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+}
+.icon {
+  width: 100px;
+  height: 100px;
+}
+.place {
+  font-weight: 500;
+  text-align: center;
+  font-size: 1.5rem;
+  line-height: 1.75rem;
+}
+.time {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  p {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem;
+  }
+}
+.wind-humidity {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+  p {
+    flex: 1;
+    text-align: center;
+    padding: 0.5rem;
+    font-weight: 400;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+  }
+  strong {
+    display: block;
+  }
+  .wind {
+    background-color: #2563eb;
+  }
+  .humidity {
+    background-color: #16a34a;
+  }
+}
+.heat {
+  width: 100%;
+  padding: 0.75rem;
+  margin-top: 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  p {
+    font-size: 1.125rem;
+    line-height: 1.75rem;
+    font-weight: 400;
+  }
+}
+.separate {
+  width: 100%;
+  height: 1px;
+  background-color: #bbbbbb;
+}
+.conditions {
+  width: 100%;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.875rem;
+  line-height: 2.25rem;
+  font-weight: 400;
+}
+@media (max-width: 1400px) {
+  .container {
+    width: 45rem;
+  }
+  .place {
+    font-size: 2.2rem;
+  }
+  .time,
+  .wind-humidity,
+  .heat {
+    p {
+      font-size: 1.8rem;
+    }
+  }
+}
+
+@media (max-width: 1200px) {
+  .container {
+    width: 40rem;
+  }
+  .place {
+    font-size: 2.2rem;
+  }
+  .temperature {
+    p {
+      font-size: 1.8rem;
+    }
+  }
+  .time,
+  .wind-humidity,
+  .heat {
+    p {
+      font-size: 1.8rem;
+    }
+  }
+}
+@media (max-width: 950px) {
+  .temperature {
+    p {
+      font-size: 2.4rem;
+    }
+  }
+}
+@media (max-width: 750px) {
+  .container {
+    width: 40rem;
+  }
+  .place {
+    font-size: 1.6rem;
+  }
+  .time,
+  .wind-humidity,
+  .heat {
+    p {
+      font-size: 1.2rem;
+    }
+  }
+  .conditions {
+    font-size: 1.7rem;
+  }
+}
