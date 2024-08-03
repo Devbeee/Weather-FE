@@ -8,8 +8,8 @@ services:
       - "3000:3000"
     environment:
       - REACT_APP_BASE_URL = http://api.weatherapi.com/v1
-      - REACT_APP_SERVER_URL = http://localhost:8000/api/v1
-      - REACT_APP_API_KEY = 58589eee37c44124a95111145240108
+      - REACT_APP_SERVER_URL = your_server_url/api/v1
+      - REACT_APP_API_KEY = your_weatherapi_key
     volumes:
       - .:/app
       - /app/node_modules
