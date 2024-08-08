@@ -1,4 +1,4 @@
-import React, { useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
@@ -46,8 +46,8 @@ const WeatherDashboard = () => {
   const { today: storedToday, keywords } = useSelector(
     (state) => state.history
   );
-  const [coordinates, setCoordinates] = React.useState("");
-  const [limitDays, setLimitDays] = React.useState(5);
+  const [coordinates, setCoordinates] = useState("");
+  const [limitDays, setLimitDays] = useState(5);
 
   const getWeatherInfo = useCallback(
     (searchValue, limit = 5) => {
@@ -58,9 +58,9 @@ const WeatherDashboard = () => {
 
   useEffect(() => {
     getWeatherInfo(
-      location?.state?.searchValue ||
-        coordinates ||
+      coordinates ||
         debouncedSearchValue ||
+        location?.state?.searchValue ||
         "Vietnam",
       limitDays
     );
@@ -73,6 +73,7 @@ const WeatherDashboard = () => {
       return;
     }
     setLimitDays(5);
+    setCoordinates("");
     getWeatherInfo(debouncedSearchValue, 5);
     handleSaveHistorySearch(debouncedSearchValue);
   };

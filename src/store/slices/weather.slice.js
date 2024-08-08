@@ -4,7 +4,7 @@ import { apiGetWeatherByCity, apiGetWeatherForecastByCity } from "~/services";
 
 export const fetchWeatherData = createAsyncThunk(
   "weather/fetchWeatherData",
-  async ({ searchValue, limit }) => {
+  async ({ searchValue, limit }) => { 
     const hourAtNow = new Date().getHours();
     const [response1, response2] = await Promise.all([
       apiGetWeatherByCity(searchValue),
@@ -43,18 +43,18 @@ export const fetchWeatherData = createAsyncThunk(
         weatherForecastData: newForecastData,
       };
     }
-    throw new Error("Failed to fetch weather data");
+   console.log("Failed to fetch weather data");
   }
 );
-
+const initialState = {
+  weatherCurrentData: {},
+  weatherForecastData: [],
+  status: "",
+  error: null,
+};
 const weatherSlice = createSlice({
   name: "weather",
-  initialState: {
-    weatherCurrentData: {},
-    weatherForecastData: [],
-    status: "",
-    error: null,
-  },
+  initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder

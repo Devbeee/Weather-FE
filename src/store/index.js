@@ -1,20 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { persistStore, persistReducer } from "redux-persist";
+import { persistStore } from "redux-persist";
 import { thunk } from "redux-thunk";
-import storage from "redux-persist/lib/storage";
 import rootReducer from "./reducers/root.reducer";
-
-const persistConfig = {
-  key: "historySearchData",
-  whitelist: ["history"],
-  storage,
-};
-
-const persistedReducer = persistReducer(persistConfig, rootReducer);
 
 const reduxStore = () => {
   const store = configureStore({
-    reducer: persistedReducer,
+    reducer: rootReducer,
     middleware: (getDefaultMiddleware) =>
       getDefaultMiddleware({
         serializableCheck: false,

@@ -18,9 +18,7 @@ const WeatherHistorySearch = () => {
   const { weatherCurrentData, weatherForecastData, status } = useSelector(
     (state) => state.weather
   );
-  const { keywords } = useSelector(
-    (state) => state.history
-  );
+  const { keywords } = useSelector((state) => state.history);
   const [searchValue, setSearchValue] = useState("");
   const [coordinates, setCoordinates] = useState("");
   const [limitDays, setLimitDays] = useState(5);
@@ -32,7 +30,7 @@ const WeatherHistorySearch = () => {
     [dispatch]
   );
   useEffect(() => {
-    getWeatherInfo(searchValue || coordinates || "Vietnam", limitDays);
+    getWeatherInfo(coordinates || searchValue || "Vietnam", limitDays);
   }, [getWeatherInfo, coordinates, searchValue, limitDays]);
   const handleGetCurrentPosition = () => {
     navigator.geolocation.getCurrentPosition(
@@ -57,6 +55,7 @@ const WeatherHistorySearch = () => {
     navigate("/");
   };
   const handleSelectCity = (value) => {
+    setCoordinates("");
     setSearchValue(value);
     setLimitDays(5);
   };
