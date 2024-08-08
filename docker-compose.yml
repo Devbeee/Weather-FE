@@ -6,10 +6,8 @@ services:
       dockerfile: Dockerfile
     ports:
       - "3000:3000"
-    environment:
-      - REACT_APP_BASE_URL = http://api.weatherapi.com/v1
-      - REACT_APP_SERVER_URL = http://localhost:8000/api/v1
-      - REACT_APP_API_KEY = 58589eee37c44124a95111145240108
+    env_file:
+      - .env
     volumes:
       - .:/app
       - /app/node_modules

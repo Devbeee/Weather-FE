@@ -4,7 +4,7 @@ import style from "./CustomSelect.module.scss";
 import { FaChevronDown, FaCheck } from "react-icons/fa6";
 const cx = className.bind(style);
 
-const CustomSelect = ({ label, value, setValue, keywords }) => {
+const CustomSelect = ({ label, value, onSelect, keywords }) => {
   const [show, setShow] = useState(false);
   return (
     <div
@@ -23,7 +23,7 @@ const CustomSelect = ({ label, value, setValue, keywords }) => {
           value={value}
           onChange={(e) => {
             e.preventDefault();
-            setValue(e.target.value);
+            onSelect(e.target.value);
           }}
         >
           {keywords?.length > 0 ? (
@@ -32,7 +32,7 @@ const CustomSelect = ({ label, value, setValue, keywords }) => {
                 key={index}
                 value={keyword}
                 className={cx("select-item")}
-                onClick={() => setValue(keyword)}
+                onClick={() => onSelect(keyword)}
               >
                 {keyword}
                 {value === keyword && <FaCheck size={20} color="red" />}

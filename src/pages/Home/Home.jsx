@@ -1,71 +1,34 @@
-import React, { useCallback, useState, useEffect } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { RxHamburgerMenu } from "react-icons/rx";
 import className from "classnames/bind";
 import style from "./Home.module.scss";
 import search from "~/assets/icons/search.svg";
-import {
-  apiGetWeatherByCity,
-  apiGetWeatherForecastByCity,
-} from "~/services";
-import {
-  BackgroundImage,
-  WeatherCard,
-  WeatherMiniCard,
-} from "~/components";
+import { BackgroundImage, WeatherCard, WeatherMiniCard } from "~/components";
+import { fetchWeatherData } from "~/store/slices/weather.slice";
+
 const cx = className.bind(style);
 const Home = () => {
   const navigate = useNavigate();
-  const [isOpen, setIsOpen] = useState(false);
-  const [searchValue, setSearchValue] = useState("");
-  const [weatherCurrentData, setWeatherCurrentData] = useState({});
-  const [weatherForecastData, setWeatherForecastData] = useState([]);
+  const dispatch = useDispatch();
 
-  const getWeatherInfo = useCallback(async (searchValue) => {
-    const hourAtNow = new Date().getHours();
-    setWeatherForecastData([]);
-    try {
-      const [response1, response2] = await Promise.all([
-        apiGetWeatherByCity(searchValue),
-        apiGetWeatherForecastByCity(searchValue, 7),
-      ]);
+  const { weatherCurrentData, weatherForecastData } = useSelector(
+    (state) => state.weather
+  );
+  const getWeatherInfo = useCallback(
+    (searchValue, limit = 14) => {
+      dispatch(fetchWeatherData({ searchValue, limit }));
+    },
+    [dispatch]
+  );
 
-      if (response1.status === 200 && response2.status === 200) {
-        const { data: weatherCurrent } = response1;
-        const { data: weatherForecast } = response2;
-        setWeatherCurrentData({
-          cityName: weatherCurrent?.location?.name,
-          localTime: weatherCurrent?.location?.localtime?.split(" ")[0],
-          temp: weatherCurrent?.current?.temp_c,
-          wind: weatherCurrent?.current?.wind_mph,
-          humidity: weatherCurrent?.current?.humidity,
-          heat: weatherCurrent?.current?.heatindex_c,
-          text: weatherCurrent?.current?.condition?.text,
-          icon: weatherCurrent?.current?.condition?.icon,
-        });
-
-        const newForecastData = weatherForecast?.forecast?.forecastday
-          ?.slice(1)
-          .flatMap((day) =>
-            day?.hour
-              ?.filter(
-                (weather) => new Date(weather?.time).getHours() === hourAtNow
-              )
-              ?.map((weather) => ({
-                localTime: weather?.time?.split(" ")[0],
-                icon: weather?.condition?.icon,
-                temp: weather?.temp_c,
-              }))
-          );
-        setWeatherForecastData(newForecastData);
-      }
-    } catch (error) {
-      console.error("Failed to fetch weather data:", error);
-    }
-  }, []);
   useEffect(() => {
     getWeatherInfo("Vietnam");
   }, [getWeatherInfo]);
+  const [isOpen, setIsOpen] = useState(false);
+  const [searchValue, setSearchValue] = useState("");
+
   const toggleMenu = () => {
     setIsOpen((prev) => !prev);
   };
@@ -151,9 +114,11 @@ const Home = () => {
         <WeatherCard weatherCurrentData={weatherCurrentData} />
         <div className={cx("list")}>
           {weatherForecastData?.length > 0 &&
-            weatherForecastData?.map((weather, index) => (
-              <WeatherMiniCard key={index} weather={weather} />
-            ))}
+            weatherForecastData
+              ?.slice(0, 6)
+              ?.map((weather, index) => (
+                <WeatherMiniCard key={index} weather={weather} />
+              ))}
         </div>
       </main>
     </div>
